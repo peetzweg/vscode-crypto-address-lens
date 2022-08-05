@@ -23,11 +23,14 @@ It currently differentiates between these four states:
 
 ## Known Issues
 
++ only detects ONE address per line
++ detects part of a longer HexString as Address
++ hard to differentiate the individual cases
 
 ## Release Notes
 
 
-### 1.0.0
+### 0.1.0
 
 Initial release of `crypto-address-lens`.
 
