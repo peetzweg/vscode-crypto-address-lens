@@ -12,6 +12,7 @@
   "engines": {
     "vscode": "^1.69.0"
   },
+  "keywords":["crypto","address","validate","ethereum","wallet"],
   "categories": [
     "Other"
   ],
