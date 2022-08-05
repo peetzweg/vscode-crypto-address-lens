@@ -1,23 +1,9 @@
 import * as vscode from "vscode";
+import * as decorations from "./decorations";
+
 import { toChecksumAddress } from "./toChecksumAddress";
 
-const checksumDecoration = vscode.window.createTextEditorDecorationType({
-  backgroundColor: "#6c71c455",
-});
-
-const lowercaseDecoration = vscode.window.createTextEditorDecorationType({
-  backgroundColor: "#258bd255",
-});
-
-const uppercaseDecoration = vscode.window.createTextEditorDecorationType({
-  backgroundColor: "#2aa19855",
-});
-
-const invalidChecksumDecoration = vscode.window.createTextEditorDecorationType({
-  backgroundColor: "#d2368255",
-});
-
-const ethRegExp = /(0x[a-fA-F0-9]{40})/;
+const ethGlobalRegExp = /(0x[a-fA-F0-9]{40})[\W\D]/g;
 
 export function activate(context: vscode.ExtensionContext) {
   vscode.workspace.onWillSaveTextDocument((event) => {
@@ -30,59 +16,53 @@ export function activate(context: vscode.ExtensionContext) {
 
 function decorate(editor: vscode.TextEditor) {
   const sourceCode = editor.document.getText();
-  const sourceCodeArr = sourceCode.split("\n");
 
-  let checksumAddresses: vscode.DecorationOptions[] = [];
+  let validChecksumAddresses: vscode.DecorationOptions[] = [];
   let invalidChecksumAddresses: vscode.DecorationOptions[] = [];
   let lowercaseAddresses: vscode.DecorationOptions[] = [];
-  let uppercaseAddresses: vscode.DecorationOptions[] = [];
 
-  for (let line = 0; line < sourceCodeArr.length; line++) {
-    let match = sourceCodeArr[line].match(ethRegExp);
+  let match;
 
-    if (match !== null && match.index !== undefined) {
-      const matchedAddress = match[1];
-      let range = new vscode.Range(
-        new vscode.Position(line, match.index),
-        new vscode.Position(line, match.index + matchedAddress.length)
-      );
+  while ((match = ethGlobalRegExp.exec(sourceCode))) {
+    const matchedAddress = match[1];
+    const startPos = editor.document.positionAt(match.index);
+    const endPos = editor.document.positionAt(
+      match.index + matchedAddress.length
+    );
+    const range = new vscode.Range(startPos, endPos);
+    const checksumAddress = toChecksumAddress(matchedAddress);
+    const hoverMessage = new vscode.MarkdownString();
+    const explorerMarkdown = [
+      `[Etherscan](https://etherscan.io/address/${checksumAddress})`,
+      `[Polygonscan](https://polygonscan.com/address/${checksumAddress})`,
+      `[Bscscan](https://bscscan.com/address/${checksumAddress})`,
+    ].join(" | ");
 
-      const checksumAddress = toChecksumAddress(matchedAddress);
-      const hoverMessage = new vscode.MarkdownString();
-      hoverMessage.appendMarkdown(
-        `[Open on Etherscan](https://etherscan.io/address/${checksumAddress})`
-      );
-
-      if (matchedAddress === checksumAddress) {
-        hoverMessage.appendText("\nAddress checksum is valid.");
-        checksumAddresses.push({
-          range,
-          hoverMessage,
-        });
-      } else if (matchedAddress === matchedAddress.toLowerCase()) {
-        hoverMessage.appendText("\nAddress is not using checksum.");
-        lowercaseAddresses.push({
-          range,
-          hoverMessage,
-        });
-      } else if (matchedAddress === matchedAddress.toUpperCase()) {
-        hoverMessage.appendText("\nAddress is not using checksum.");
-        uppercaseAddresses.push({
-          range,
-          hoverMessage,
-        });
-      } else {
-        hoverMessage.appendText("\nAddress has an invalid checksum!");
-        invalidChecksumAddresses.push({
-          range,
-          hoverMessage,
-        });
-      }
+    if (matchedAddress === checksumAddress) {
+      hoverMessage.appendText("Address checksum is valid.\n");
+      hoverMessage.appendMarkdown(explorerMarkdown);
+      validChecksumAddresses.push({
+        range,
+        hoverMessage,
+      });
+    } else if (matchedAddress === matchedAddress.toLowerCase()) {
+      hoverMessage.appendText("Address is not using checksum.\n");
+      hoverMessage.appendMarkdown(explorerMarkdown);
+      lowercaseAddresses.push({
+        range,
+        hoverMessage,
+      });
+    } else {
+      hoverMessage.appendText("Address has an invalid checksum!\n");
+      hoverMessage.appendMarkdown(explorerMarkdown);
+      invalidChecksumAddresses.push({
+        range,
+        hoverMessage,
+      });
     }
   }
 
-  editor.setDecorations(checksumDecoration, checksumAddresses);
-  editor.setDecorations(lowercaseDecoration, lowercaseAddresses);
-  editor.setDecorations(uppercaseDecoration, uppercaseAddresses);
-  editor.setDecorations(invalidChecksumDecoration, invalidChecksumAddresses);
+  editor.setDecorations(decorations.validChecksum, validChecksumAddresses);
+  editor.setDecorations(decorations.lowercase, lowercaseAddresses);
+  editor.setDecorations(decorations.invalidChecksum, invalidChecksumAddresses);
 }
