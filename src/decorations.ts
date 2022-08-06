@@ -7,7 +7,7 @@ const commonStyle = {
 
 export const validChecksum = window.createTextEditorDecorationType({
   ...commonStyle,
-  borderColor: "#00ff5a55",
+  borderColor: "#00ff5a99",
   after: {
     contentText: "🟢",
     margin: "0 0 0 2px",
@@ -16,16 +16,16 @@ export const validChecksum = window.createTextEditorDecorationType({
 
 export const invalidChecksum = window.createTextEditorDecorationType({
   ...commonStyle,
-  borderColor: "#ffd283ee",
+  borderColor: "#ff7877ee",
   after: {
-    contentText: "🟠",
+    contentText: "🔴",
     margin: "0 0 0 2px",
   },
 });
 
 export const lowercase = window.createTextEditorDecorationType({
   ...commonStyle,
-  borderColor: "#fff17aee",
+  borderColor: "#ffdb00ff",
   after: {
     contentText: "🟡",
     margin: "0 0 0 2px",
