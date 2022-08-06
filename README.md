@@ -1,6 +1,17 @@
-# crypto-address-lens README
+![logo](https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/logo.png)
+# 🔭 Crypto Address Lens
+
+![demo](https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/demo.gif)
 
 ## Features
+
++ highlights ethereum style addresses
+
++ tells you if address checksum is correct
+
++ directly links to blockchain explorer
+
+---
 
 Highlights Ethereum style wallet addresses in your code. It will check if it's a valid address and even check if it has a correct checksum if mixed case was used.
 
@@ -12,7 +23,7 @@ It currently differentiates between these four states:
 
  2. Mixed Cased Address with **INVALID** checksum
 
- 3. All upper or lower cased Address
+ 3. All lower cased Address
 
  4. Not a valid address at all!
 <!--
