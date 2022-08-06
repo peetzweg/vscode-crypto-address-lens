@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.3.1] - 2022-08-06
+
+### Removed
+
++ icon from README file
+
 ## [0.3.0] - 2022-08-06
 
 ### Added

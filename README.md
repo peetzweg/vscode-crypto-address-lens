@@ -1,4 +1,3 @@
-![logo](https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/logo.png)
 # 🔭 Crypto Address Lens
 
 ![demo](https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/demo.gif)
