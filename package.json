@@ -4,6 +4,14 @@
   "description": "VSCode extension to inspect and validate crypto address inside the source code.",
   "version": "0.2.0",
   "license": "Apache-2.0",
+  "badges": [
+    {
+      "url": "https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/logo.png",
+      "href": "https://marketplace.visualstudio.com/items?itemName=peetzweg.crypto-address-lens",
+      "description": "VSCode extension to inspect and validate crypto address inside the source code."
+    }
+  ],
+  "icon": "./logo.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/peetzweg/vscode-crypto-address-lens"
@@ -12,7 +20,13 @@
   "engines": {
     "vscode": "^1.69.0"
   },
-  "keywords":["crypto","address","validate","ethereum","wallet"],
+  "keywords": [
+    "crypto",
+    "address",
+    "validate",
+    "ethereum",
+    "wallet"
+  ],
   "categories": [
     "Other"
   ],
@@ -24,8 +38,7 @@
     "onLanguage:javascript"
   ],
   "main": "./out/extension.js",
-  "contributes": {
-  },
+  "contributes": {},
   "scripts": {
     "login": "vsce login peetzweg",
     "publish": "vsce publish",
