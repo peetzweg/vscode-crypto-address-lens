@@ -37,16 +37,7 @@ It currently differentiates between these four states:
 
 ## Release Notes
 
-
-### 0.2.0
-
-+ detects multiple address per line
-+ simplifies styling to clash less with used editor theme
-+ does not detect transaction hashes as addresses anymore
-
-### 0.1.0
-
-Initial release of `crypto-address-lens`.
+See [CHANGELOG](./CHANGELOG.md)
 
 ---
 
