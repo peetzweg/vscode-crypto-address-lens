@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.3.1] - 2022-08-08
+
+### Changed
+
++ using `onStartupFinished` as `activationEvents` to be language agnostic
+
 ## [0.3.1] - 2022-08-06
 
 ### Removed

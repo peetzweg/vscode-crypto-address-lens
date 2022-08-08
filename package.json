@@ -2,7 +2,7 @@
   "name": "crypto-address-lens",
   "displayName": "Crypto Address Lens",
   "description": "VSCode extension to inspect and validate crypto address inside the source code.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "license": "Apache-2.0",
   "badges": [
     {
@@ -31,11 +31,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:json",
-    "onLanguage:markdown",
-    "onLanguage:typescript",
-    "onLanguage:solidity",
-    "onLanguage:javascript"
+    "onStartupFinished"
   ],
   "main": "./out/extension.js",
   "contributes": {},
