@@ -33,7 +33,7 @@ It currently differentiates between these four states:
 
 ## Known Issues
 
--
+See [Issues on Github](https://github.com/peetzweg/vscode-crypto-address-lens/issues)
 
 ## Release Notes
 
