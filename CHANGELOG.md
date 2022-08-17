@@ -1,4 +1,14 @@
 # Change Log
+## [0.3.3] - 2022-08-08
+
+### Changed
+
++ decorates all visible editors on startup
++ always decorates the active editor, even without saving the file
+
+### Fixed
+
++ properly decorate valid addresses at end of file or line
 
 ## [0.3.2] - 2022-08-08
 
