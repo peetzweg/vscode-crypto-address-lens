@@ -1,7 +1,4 @@
 # 🔭 Crypto Address Lens
-
-![demo](https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/demo.gif)
-
 ## Features
 
 + highlights ethereum style addresses
@@ -9,6 +6,14 @@
 + tells you if address checksum is correct
 
 + directly links to blockchain explorer
+
+![demo](https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/demo.gif)
+
+
++ shows contracts "symbol()" inline if available
+
+![demo_lookup](https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/demo-lookup.gif)
+
 
 ---
 
