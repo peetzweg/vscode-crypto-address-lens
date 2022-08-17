@@ -8,10 +8,14 @@ import {
   workspace,
 } from "vscode";
 import * as decorations from "./config/decorations";
+import { getContractSymbol } from "./utils/getContractSymbol";
 
 import { toChecksumAddress } from "./utils/toChecksumAddress";
 
 const ethGlobalRegExp = /(0x[a-fA-F0-9]{40})[\W\D\n]/g;
+const ethSingleLineRegExp = /(0x[a-fA-F0-9]{40})[\W\D\n\s$]*/;
+
+let detailsDecoration: TextEditorDecorationType | null = null;
 
 export function activate(context: ExtensionContext) {
   // Decorate all visible editors on startup
@@ -32,6 +36,47 @@ export function activate(context: ExtensionContext) {
   workspace.onWillSaveTextDocument((event) => {
     if (window.activeTextEditor) {
       decorate(window.activeTextEditor);
+    }
+  });
+
+  window.onDidChangeTextEditorSelection((event) => {
+    // Always dispose previous decoration if available
+    if (detailsDecoration) {
+      detailsDecoration.dispose();
+    }
+
+    const [selection] = event.selections;
+    // Do nothing if multiple lines are selected
+    if (!selection.isSingleLine) {
+      return;
+    }
+
+    const lineText = event.textEditor.document.lineAt(
+      selection.start.line
+    ).text;
+
+    let match;
+    if ((match = ethSingleLineRegExp.exec(lineText))) {
+      getContractSymbol(match[1]).then((name) => {
+        if (!name) {
+          return;
+        }
+        const range = new Range(selection.start, selection.end);
+
+        detailsDecoration = window.createTextEditorDecorationType({
+          isWholeLine: true,
+          after: {
+            color: "#5d5d55",
+            contentText: `\t| ${name}`,
+          },
+        });
+
+        event.textEditor.setDecorations(detailsDecoration, [
+          {
+            range,
+          },
+        ]);
+      });
     }
   });
 }
