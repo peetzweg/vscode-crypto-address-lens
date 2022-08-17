@@ -4,6 +4,7 @@ import {
   MarkdownString,
   Range,
   TextEditor,
+  TextEditorDecorationType,
   window,
   workspace,
 } from "vscode";

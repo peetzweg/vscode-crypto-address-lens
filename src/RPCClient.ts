@@ -92,7 +92,7 @@ export class RPCClient {
             return reject(new Error(`HTTP status code ${res.statusCode}`));
           }
 
-          const body: UInt8Array = [];
+          const body: Uint8Array[] = [];
           res.on("data", (chunk: any) => body.push(chunk));
           res.on("end", () => {
             const response = JSON.parse(Buffer.concat(body).toString());
