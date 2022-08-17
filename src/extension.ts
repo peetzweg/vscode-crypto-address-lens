@@ -1,25 +1,47 @@
-import * as vscode from "vscode";
-import * as decorations from "./decorations";
+import {
+  DecorationOptions,
+  ExtensionContext,
+  MarkdownString,
+  Range,
+  TextEditor,
+  window,
+  workspace,
+} from "vscode";
+import * as decorations from "./config/decorations";
 
-import { toChecksumAddress } from "./toChecksumAddress";
+import { toChecksumAddress } from "./utils/toChecksumAddress";
 
-const ethGlobalRegExp = /(0x[a-fA-F0-9]{40})[\W\D]/g;
+const ethGlobalRegExp = /(0x[a-fA-F0-9]{40})[\W\D\n]/g;
 
-export function activate(context: vscode.ExtensionContext) {
-  vscode.workspace.onWillSaveTextDocument((event) => {
-    const openEditor = vscode.window.visibleTextEditors.filter((editor) => {
-      return editor.document.uri === event.document.uri;
-    })[0];
-    decorate(openEditor);
+export function activate(context: ExtensionContext) {
+  // Decorate all visible editors on startup
+  if (window.visibleTextEditors.length > 0) {
+    window.visibleTextEditors.forEach((editor) => {
+      decorate(editor);
+    });
+  }
+
+  // Listener to decorate active editor on change
+  window.onDidChangeActiveTextEditor((editor) => {
+    if (editor) {
+      decorate(editor);
+    }
+  });
+
+  // Redecorate if an Editor is saved
+  workspace.onWillSaveTextDocument((event) => {
+    if (window.activeTextEditor) {
+      decorate(window.activeTextEditor);
+    }
   });
 }
 
-function decorate(editor: vscode.TextEditor) {
+function decorate(editor: TextEditor) {
   const sourceCode = editor.document.getText();
 
-  let validChecksumAddresses: vscode.DecorationOptions[] = [];
-  let invalidChecksumAddresses: vscode.DecorationOptions[] = [];
-  let lowercaseAddresses: vscode.DecorationOptions[] = [];
+  let validChecksumAddresses: DecorationOptions[] = [];
+  let invalidChecksumAddresses: DecorationOptions[] = [];
+  let lowercaseAddresses: DecorationOptions[] = [];
 
   let match;
 
@@ -29,9 +51,9 @@ function decorate(editor: vscode.TextEditor) {
     const endPos = editor.document.positionAt(
       match.index + matchedAddress.length
     );
-    const range = new vscode.Range(startPos, endPos);
+    const range = new Range(startPos, endPos);
     const checksumAddress = toChecksumAddress(matchedAddress);
-    const hoverMessage = new vscode.MarkdownString();
+    const hoverMessage = new MarkdownString();
     const explorerMarkdown = [
       `[Etherscan](https://etherscan.io/address/${checksumAddress})`,
       `[Polygonscan](https://polygonscan.com/address/${checksumAddress})`,

@@ -55,5 +55,3 @@ I used these tutorials to get me started.
 https://vscode.rocks/decorations/
 
 https://github.com/microsoft/vscode-extension-samples/blob/main/decorator-sample/USAGE.md
-
-
