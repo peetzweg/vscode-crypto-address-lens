@@ -1,6 +1,6 @@
 # 🔭 Crypto Address Lens (for VSCode)
 
-[➡ Install Extension](vscode:extension/peetzweg.crypto-address-lens)
+[➡ Install Extension on Marketplace](https://marketplace.visualstudio.com/items?itemName=peetzweg.crypto-address-lens)
 
 ## Features
 
