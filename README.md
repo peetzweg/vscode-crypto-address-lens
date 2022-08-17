@@ -1,10 +1,11 @@
-# 🔭 Crypto Address Lens
+# 🔭 Crypto Address Lens (for VSCode)
+
+[➡ Install Extension](vscode:extension/peetzweg.crypto-address-lens)
+
 ## Features
 
 + highlights ethereum style addresses
-
 + tells you if address checksum is correct
-
 + directly links to blockchain explorer
 
 ![demo](https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/demo.gif)
