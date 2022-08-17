@@ -1,4 +1,11 @@
 # Change Log
+
+## [0.4.0] - 2022-08-17
+
+### Added
+
++ shows "symbol()" value in line if available
+
 ## [0.3.3] - 2022-08-17
 
 ### Changed
