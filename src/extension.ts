@@ -8,7 +8,7 @@ import {
   workspace,
 } from "vscode";
 import * as decorations from "./config/decorations";
-import { getContractSymbol } from "./utils/getContractSymbol";
+import { RPCClient } from "./RPCClient";
 
 import { toChecksumAddress } from "./utils/toChecksumAddress";
 
@@ -16,6 +16,10 @@ const ethGlobalRegExp = /(0x[a-fA-F0-9]{40})[\W\D\n]/g;
 const ethSingleLineRegExp = /(0x[a-fA-F0-9]{40})[\W\D\n\s$]*/;
 
 let detailsDecoration: TextEditorDecorationType | null = null;
+
+const ethereumRPC = new RPCClient("https://rpc.ankr.com/eth");
+const polygonRPC = new RPCClient("https://rpc-mainnet.matic.quiknode.pro");
+const bscRPC = new RPCClient("https://binance.nodereal.io");
 
 export function activate(context: ExtensionContext) {
   // Decorate all visible editors on startup
@@ -57,26 +61,36 @@ export function activate(context: ExtensionContext) {
 
     let match;
     if ((match = ethSingleLineRegExp.exec(lineText))) {
-      getContractSymbol(match[1]).then((name) => {
-        if (!name) {
-          return;
-        }
-        const range = new Range(selection.start, selection.end);
+      Promise.all([
+        ethereumRPC
+          .symbol(match[1])
+          .then((s) => (s ? s + " (Ethereum)" : null)),
+        polygonRPC.symbol(match[1]).then((s) => (s ? s + " (Polygon)" : null)),
+        bscRPC.symbol(match[1]).then((s) => (s ? s + " (BSC)" : null)),
+      ])
+        .then((symbols) => symbols.find((s) => !!s))
+        .then((symbol) => {
+          if (!symbol) {
+            return;
+          }
+          const range = new Range(selection.start, selection.end);
+          const hoverMessage = new MarkdownString();
+          hoverMessage.appendText(symbol as string);
+          detailsDecoration = window.createTextEditorDecorationType({
+            isWholeLine: true,
+            after: {
+              color: "#5d5d55",
+              contentText: `\t| ${symbol}`,
+            },
+          });
 
-        detailsDecoration = window.createTextEditorDecorationType({
-          isWholeLine: true,
-          after: {
-            color: "#5d5d55",
-            contentText: `\t| ${name}`,
-          },
+          event.textEditor.setDecorations(detailsDecoration, [
+            {
+              range,
+              hoverMessage,
+            },
+          ]);
         });
-
-        event.textEditor.setDecorations(detailsDecoration, [
-          {
-            range,
-          },
-        ]);
-      });
     }
   });
 }

@@ -19,3 +19,5 @@ export function toChecksumAddress(address: string) {
 function stripHexPrefix(address: string) {
   return address.slice(0, 2) === "0x" ? address.slice(2) : address;
 }
+
+export default toChecksumAddress;
