@@ -8,6 +8,7 @@ import {
   window,
   workspace,
 } from "vscode";
+import { ChainInfos } from "./config/chains";
 import * as decorations from "./config/decorations";
 import { RPCClient } from "./RPCClient";
 
@@ -18,9 +19,31 @@ const ethSingleLineRegExp = /(0x[a-fA-F0-9]{40})[\W\D\n\s$]*/;
 
 let detailsDecoration: TextEditorDecorationType | null = null;
 
-const ethereumRPC = new RPCClient("https://rpc.ankr.com/eth");
-const polygonRPC = new RPCClient("https://rpc-mainnet.matic.quiknode.pro");
-const bscRPC = new RPCClient("https://binance.nodereal.io");
+let rpcClients: RPCClient[] = [];
+
+function initRPCClients(): RPCClient[] {
+  const clients = Object.entries(ChainInfos).map(([, chainDetails]) => {
+    const enabled = workspace
+      .getConfiguration("cryptoAddressLens." + chainDetails.configSection)
+      .get("enabled");
+    const rpc = workspace
+      .getConfiguration("cryptoAddressLens." + chainDetails.configSection)
+      .get("rpc");
+
+    if (rpc && typeof rpc === "string") {
+      if (enabled) {
+        return new RPCClient(chainDetails.name, rpc);
+      }
+    } else {
+      console.warn(
+        `RPC Url for chain ${chainDetails.name} not correctly setup: ${rpc}`
+      );
+      return;
+    }
+  });
+
+  return clients.filter((client) => !!client) as RPCClient[];
+}
 
 export function activate(context: ExtensionContext) {
   // Decorate all visible editors on startup
@@ -44,6 +67,13 @@ export function activate(context: ExtensionContext) {
     }
   });
 
+  // Reinit rpcClients if configuration has changed
+  workspace.onDidChangeConfiguration((event) => {
+    rpcClients = initRPCClients();
+  });
+
+  // Init clients right before first use
+  rpcClients = initRPCClients();
   window.onDidChangeTextEditorSelection((event) => {
     // Always dispose previous decoration if available
     if (detailsDecoration) {
@@ -60,15 +90,15 @@ export function activate(context: ExtensionContext) {
       selection.start.line
     ).text;
 
-    let match;
-    if ((match = ethSingleLineRegExp.exec(lineText))) {
-      Promise.all([
-        ethereumRPC
-          .symbol(match[1])
-          .then((s) => (s ? s + " (Ethereum)" : null)),
-        polygonRPC.symbol(match[1]).then((s) => (s ? s + " (Polygon)" : null)),
-        bscRPC.symbol(match[1]).then((s) => (s ? s + " (BSC)" : null)),
-      ])
+    let match = ethSingleLineRegExp.exec(lineText);
+    if (match !== null && match.length > 0) {
+      Promise.all(
+        rpcClients.map((c) =>
+          c
+            .symbol(match![1])
+            .then((s) => (s ? s + ` (${c.networkName})` : null))
+        )
+      )
         .then((symbols) => symbols.find((s) => !!s))
         .then((symbol) => {
           if (!symbol) {

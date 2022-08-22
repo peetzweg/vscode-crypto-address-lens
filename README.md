@@ -16,6 +16,28 @@
 ![demo_lookup](https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/demo-lookup.gif)
 
 
+## Configuration
+
+Valid configurations settings with defaults:
+
+```json
+cryptoAddressLens.ethereum.rpc="https://rpc.ankr.com/eth"
+cryptoAddressLens.ethereum.enabled=true
+
+cryptoAddressLens.polygon.rpc="https://rpc-mainnet.matic.quiknode.pro"
+cryptoAddressLens.polygon.enabled=true
+
+cryptoAddressLens.bsc.rpc="https://binance.nodereal.io"
+cryptoAddressLens.bsc.enabled=true
+
+cryptoAddressLens.local.rpc="http://localhost:8545"
+cryptoAddressLens.local.enabled=false
+
+cryptoAddressLens.custom.rpc="http://localhost:8545"
+cryptoAddressLens.custom.enabled=false
+
+```
+
 ---
 
 Highlights Ethereum style wallet addresses in your code. It will check if it's a valid address and even check if it has a correct checksum if mixed case was used.

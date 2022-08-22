@@ -34,7 +34,6 @@
     "onStartupFinished"
   ],
   "main": "./out/extension.js",
-  "contributes": {},
   "scripts": {
     "login": "vsce login peetzweg",
     "publish": "vsce publish",
@@ -62,5 +61,62 @@
   "dependencies": {
     "@ethersproject/abi": "^5.6.4",
     "keccak": "^3.0.2"
+  },
+  "contributes": {
+    "configuration": {
+      "title": "Crypto Address Lens",
+      "properties": {
+        "cryptoAddressLens.ethereum.rpc": {
+          "type": "string",
+          "default": "https://rpc.ankr.com/eth",
+          "description": "URL of the RPC node to use for Ethereum"
+        },
+        "cryptoAddressLens.ethereum.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enables Ethereum for Address Lookups"
+        },
+        "cryptoAddressLens.polygon.rpc": {
+          "type": "string",
+          "default": "https://rpc-mainnet.matic.quiknode.pro",
+          "description": "URL of the RPC node to use for Polygon"
+        },
+        "cryptoAddressLens.polygon.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enables Polygon for Address Lookups"
+        },
+        "cryptoAddressLens.bsc.rpc": {
+          "type": "string",
+          "default": "https://binance.nodereal.io",
+          "description": "URL of the RPC node to use for Binance Smart Chain"
+        },
+        "cryptoAddressLens.bsc.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enables Binance Smart Chain for Address Lookups"
+        },
+        "cryptoAddressLens.local.rpc": {
+          "type": "string",
+          "default": "http://localhost:8545",
+          "description": "URL of the RPC node to use for Local Chain"
+        },
+        "cryptoAddressLens.local.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enables Local Chain for Address Lookups"
+        },
+        "cryptoAddressLens.custom.rpc": {
+          "type": "string",
+          "default": "http://localhost:8545",
+          "description": "URL of the RPC node to use for Custom Chain"
+        },
+        "cryptoAddressLens.custom.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enables Custom Chain for Address Lookups"
+        }
+      }
+    }
   }
 }

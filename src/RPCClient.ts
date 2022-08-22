@@ -14,7 +14,7 @@ type SolidityType = "string" | "uint";
 export class RPCClient {
   private memory: Record<string, string | number | null | undefined> = {};
 
-  constructor(private rpcUrl: string) {}
+  constructor(public networkName: string, private rpcUrl: string) {}
 
   decimals = this.resolveOrFetchProperty(
     FUNCTION_SELECTORS["decimals()"],
