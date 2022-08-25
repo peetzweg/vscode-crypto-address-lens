@@ -1,6 +1,7 @@
 import {
   DecorationOptions,
   ExtensionContext,
+  languages,
   MarkdownString,
   Range,
   TextEditor,
@@ -8,14 +9,12 @@ import {
   window,
   workspace,
 } from "vscode";
+import ethereum from "./addresses/ethereum";
+import { AddressFixer } from "./AddressFixer";
 import { ChainInfos } from "./config/chains";
 import * as decorations from "./config/decorations";
 import { RPCClient } from "./RPCClient";
-
 import { toChecksumAddress } from "./utils/toChecksumAddress";
-
-const ethGlobalRegExp = /(0x[a-fA-F0-9]{40})[\W\D\n]/g;
-const ethSingleLineRegExp = /(0x[a-fA-F0-9]{40})[\W\D\n\s$]*/;
 
 let detailsDecoration: TextEditorDecorationType | null = null;
 
@@ -46,6 +45,20 @@ function initRPCClients(): RPCClient[] {
 }
 
 export function activate(context: ExtensionContext) {
+  context.subscriptions.push(
+    languages.registerCodeActionsProvider(
+      [
+        { scheme: "file", language: "javascript" },
+        { scheme: "file", language: "typescript" },
+        { scheme: "file", language: "solidity" },
+      ],
+      new AddressFixer(),
+      {
+        providedCodeActionKinds: AddressFixer.providedCodeActionKinds,
+      }
+    )
+  );
+
   // Decorate all visible editors on startup
   if (window.visibleTextEditors.length > 0) {
     window.visibleTextEditors.forEach((editor) => {
@@ -61,14 +74,14 @@ export function activate(context: ExtensionContext) {
   });
 
   // Redecorate if an Editor is saved
-  workspace.onWillSaveTextDocument((event) => {
+  workspace.onWillSaveTextDocument(() => {
     if (window.activeTextEditor) {
       decorate(window.activeTextEditor);
     }
   });
 
-  // Reinit rpcClients if configuration has changed
-  workspace.onDidChangeConfiguration((event) => {
+  // Init rpcClients again if configuration has changed
+  workspace.onDidChangeConfiguration(() => {
     rpcClients = initRPCClients();
   });
 
@@ -90,7 +103,7 @@ export function activate(context: ExtensionContext) {
       selection.start.line
     ).text;
 
-    let match = ethSingleLineRegExp.exec(lineText);
+    let match = ethereum.line.exec(lineText);
     if (match !== null && match.length > 0) {
       Promise.all(
         rpcClients.map((c) =>
@@ -135,7 +148,7 @@ function decorate(editor: TextEditor) {
 
   let match;
 
-  while ((match = ethGlobalRegExp.exec(sourceCode))) {
+  while ((match = ethereum.global.exec(sourceCode))) {
     const matchedAddress = match[1];
     const startPos = editor.document.positionAt(match.index);
     const endPos = editor.document.positionAt(
