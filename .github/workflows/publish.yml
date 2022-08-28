@@ -28,7 +28,7 @@ jobs:
       - name: Publish
         run: npm run publish
         env:
-          AZURE: ${{ secrets.PEETZWEG_AZURE_KEY }}
+          VSCE_PAT: ${{ secrets.PEETZWEG_AZURE_KEY }}
 
 
 
