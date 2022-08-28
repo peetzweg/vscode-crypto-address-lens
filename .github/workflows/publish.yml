@@ -1,0 +1,35 @@
+name: Publish Extension
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'npm'
+
+      - name: Install `packages`
+        run: npm install
+
+      - name: Compile
+        run: npm run compile
+
+      - name: Login
+        env: # Or as an environment variable
+          credentials: ${{ secrets.PEETZWEG_AZURE_KEY }}
+        run: npm run login
+
+      - name: Publish
+        run: npm run publish
+
+
+
+
