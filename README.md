@@ -24,20 +24,20 @@ Valid configurations settings with defaults:
 
 ```json
 {
-    cryptoAddressLens.ethereum.rpc="https://rpc.ankr.com/eth",
-    cryptoAddressLens.ethereum.enabled=true,
+    "cryptoAddressLens.ethereum.rpc"="https://rpc.ankr.com/eth",
+    "cryptoAddressLens.ethereum.enabled"=true,
 
-    cryptoAddressLens.polygon.rpc="https://rpc-mainnet.matic.quiknode.pro",
-    cryptoAddressLens.polygon.enabled=true,
+    "cryptoAddressLens.polygon.rpc"="https://rpc-mainnet.matic.quiknode.pro",
+    "cryptoAddressLens.polygon.enabled"=true,
 
-    cryptoAddressLens.bsc.rpc="https://binance.nodereal.io",
-    cryptoAddressLens.bsc.enabled=true,
+    "cryptoAddressLens.bsc.rpc"="https://binance.nodereal.io",
+    "cryptoAddressLens.bsc.enabled"=true,
 
-    cryptoAddressLens.local.rpc="http://localhost:8545",
-    cryptoAddressLens.local.enabled=false,
+    "cryptoAddressLens.local.rpc"="http://localhost:8545",
+    "cryptoAddressLens.local.enabled"=false,
 
-    cryptoAddressLens.custom.rpc="http://localhost:8545",
-    cryptoAddressLens.custom.enabled=false
+    "cryptoAddressLens.custom.rpc"="http://localhost:8545",
+    "cryptoAddressLens.custom.enabled"=false
 }
 ```
 
