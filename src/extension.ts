@@ -47,11 +47,7 @@ function initRPCClients(): RPCClient[] {
 export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     languages.registerCodeActionsProvider(
-      [
-        { scheme: "file", language: "javascript" },
-        { scheme: "file", language: "typescript" },
-        { scheme: "file", language: "solidity" },
-      ],
+      { scheme: "file" },
       new AddressFixer(),
       {
         providedCodeActionKinds: AddressFixer.providedCodeActionKinds,
