@@ -54,7 +54,7 @@ export class AddressFixer implements vscode.CodeActionProvider {
     const lineText = document.lineAt(cursorPosition.line).text;
 
     let match;
-    while ((match = ethereum.line.exec(lineText))) {
+    while ((match = ethereum.global.exec(lineText))) {
       const matchedAddress = match[1];
       const [startCharacter, endCharacter] = [
         match.index,
