@@ -10,32 +10,35 @@
 
 ![demo](https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/demo.gif)
 
-
 + shows contracts "symbol()" inline if available
 
 ![demo_lookup](https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/demo-lookup.gif)
 
++ offers code actions (`'CMD'` + `'.'`) to fix checksum of address or convert it to lowercase
+
+![demo_codeactions](https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/demo-codeactions.gif)
 
 ## Configuration
 
 Valid configurations settings with defaults:
 
 ```json
-cryptoAddressLens.ethereum.rpc="https://rpc.ankr.com/eth"
-cryptoAddressLens.ethereum.enabled=true
+{
+    cryptoAddressLens.ethereum.rpc="https://rpc.ankr.com/eth",
+    cryptoAddressLens.ethereum.enabled=true,
 
-cryptoAddressLens.polygon.rpc="https://rpc-mainnet.matic.quiknode.pro"
-cryptoAddressLens.polygon.enabled=true
+    cryptoAddressLens.polygon.rpc="https://rpc-mainnet.matic.quiknode.pro",
+    cryptoAddressLens.polygon.enabled=true,
 
-cryptoAddressLens.bsc.rpc="https://binance.nodereal.io"
-cryptoAddressLens.bsc.enabled=true
+    cryptoAddressLens.bsc.rpc="https://binance.nodereal.io",
+    cryptoAddressLens.bsc.enabled=true,
 
-cryptoAddressLens.local.rpc="http://localhost:8545"
-cryptoAddressLens.local.enabled=false
+    cryptoAddressLens.local.rpc="http://localhost:8545",
+    cryptoAddressLens.local.enabled=false,
 
-cryptoAddressLens.custom.rpc="http://localhost:8545"
-cryptoAddressLens.custom.enabled=false
-
+    cryptoAddressLens.custom.rpc="http://localhost:8545",
+    cryptoAddressLens.custom.enabled=false
+}
 ```
 
 ---
@@ -80,6 +83,12 @@ Ensure that you've read through the extensions guidelines and follow the best pr
 
 I used these tutorials to get me started.
 
+### Decorations
+
 https://vscode.rocks/decorations/
 
 https://github.com/microsoft/vscode-extension-samples/blob/main/decorator-sample/USAGE.md
+
+### Diagnostics
+
+https://github.com/microsoft/vscode-extension-samples/blob/main/code-actions-sample/src/extension.ts

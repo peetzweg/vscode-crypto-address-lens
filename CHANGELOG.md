@@ -1,5 +1,19 @@
 # Change Log
 
+## [0.5.0] - 2022-08-28
+
+### Added
+
++ QuickFix actions to fix selected addresses checksum or convert it into a lowercase address,
+
++ disable address lookup for certain chains in the plugin settings or use extension configuration property: `cryptoAddressLens.[network].enabled=boolean`,
+
++ change default RPC servers in the plugin settings or use extension configuration property: `cryptoAddressLens.[network].rpc=string`.
+
+### Fixed
+
++ disposes token name and symbol decoration more consistently now.
+
 ## [0.4.0] - 2022-08-17
 
 ### Added
