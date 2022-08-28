@@ -22,13 +22,13 @@ jobs:
       - name: Compile
         run: npm run compile
 
-      - name: Login
-        env: # Or as an environment variable
-          credentials: ${{ secrets.PEETZWEG_AZURE_KEY }}
-        run: npm run login
+      # - name: Login
+      #   run: npm run login
 
       - name: Publish
         run: npm run publish
+        env:
+          AZURE: ${{ secrets.PEETZWEG_AZURE_KEY }}
 
 
 
