@@ -1,4 +1,4 @@
-name: Publish Extension
+name: Code Quality
 
 on:
   push:
