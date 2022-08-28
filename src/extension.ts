@@ -116,6 +116,7 @@ export function activate(context: ExtensionContext) {
           const range = new Range(selection.start, selection.end);
           const hoverMessage = new MarkdownString();
           hoverMessage.appendText(symbol as string);
+
           detailsDecoration = window.createTextEditorDecorationType({
             isWholeLine: true,
             after: {
@@ -124,6 +125,10 @@ export function activate(context: ExtensionContext) {
             },
           });
 
+          // Dispose again, because maybe a new one was added in the meantime.
+          if (detailsDecoration) {
+            detailsDecoration.dispose();
+          }
           event.textEditor.setDecorations(detailsDecoration, [
             {
               range,
