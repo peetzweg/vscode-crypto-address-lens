@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 enum ChainId {
   ETHEREUM = 1,
   POLYGON = 137,
