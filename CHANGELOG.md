@@ -1,5 +1,17 @@
 # Change Log
 
+## [0.5.1] - 2022-09-01
+
+### Changed
+
++ Not showing symbol in hover message anymore. The implementation caused flickering when trying to reach for a blockscanner link with the mouse.
+
+### Fixed
+
++ showing token symbol were not shown anymore at the end of the current line,
+
++ Code actions to convert selected address were only shown every other time.
+
 ## [0.5.0] - 2022-08-28
 
 ### Added

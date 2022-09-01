@@ -114,8 +114,6 @@ export function activate(context: ExtensionContext) {
             return;
           }
           const range = new Range(selection.start, selection.end);
-          const hoverMessage = new MarkdownString();
-          hoverMessage.appendText(symbol as string);
 
           // Dispose old decoration again, because maybe a new one was added in the meantime.
           if (detailsDecoration) {
@@ -133,7 +131,6 @@ export function activate(context: ExtensionContext) {
           event.textEditor.setDecorations(detailsDecoration, [
             {
               range,
-              hoverMessage,
             },
           ]);
         });
