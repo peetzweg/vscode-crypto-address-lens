@@ -21,6 +21,18 @@ export class AddressFixer implements vscode.CodeActionProvider {
 
     const fixes: vscode.CodeAction[] = [];
 
+    const checksumAddress = toChecksumAddress(rawAddress);
+    if (checksumAddress !== rawAddress) {
+      const toCheckSumAddressFix = this.createFix(
+        document,
+        rangeOfAddress,
+        checksumAddress,
+        "Convert to address with checksum"
+      );
+      toCheckSumAddressFix.isPreferred = true;
+      fixes.push(toCheckSumAddressFix);
+    }
+
     if (rawAddress.toLowerCase() !== rawAddress) {
       const toLowerCaseFix = this.createFix(
         document,
@@ -28,19 +40,10 @@ export class AddressFixer implements vscode.CodeActionProvider {
         rawAddress.toLowerCase(),
         "Convert to lowercase address"
       );
+      if (fixes.length === 0) {
+        toLowerCaseFix.isPreferred = true;
+      }
       fixes.push(toLowerCaseFix);
-    }
-
-    const checksumAddress = toChecksumAddress(rawAddress);
-    if (checksumAddress !== rawAddress) {
-      const toCheckSumAddressFix = this.createFix(
-        document,
-        rangeOfAddress,
-        checksumAddress,
-        "Fix address checksum"
-      );
-      toCheckSumAddressFix.isPreferred = true;
-      fixes.push(toCheckSumAddressFix);
     }
 
     return fixes;
@@ -54,7 +57,8 @@ export class AddressFixer implements vscode.CodeActionProvider {
     const lineText = document.lineAt(cursorPosition.line).text;
 
     let match;
-    while ((match = ethereum.global.exec(lineText))) {
+    const regex = ethereum.global();
+    while ((match = regex.exec(lineText))) {
       const matchedAddress = match[1];
       const [startCharacter, endCharacter] = [
         match.index,

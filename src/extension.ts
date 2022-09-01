@@ -148,8 +148,8 @@ function decorate(editor: TextEditor) {
   let lowercaseAddresses: DecorationOptions[] = [];
 
   let match;
-
-  while ((match = ethereum.global.exec(sourceCode))) {
+  const regex = ethereum.global();
+  while ((match = regex.exec(sourceCode))) {
     const matchedAddress = match[1];
     const startPos = editor.document.positionAt(match.index);
     const endPos = editor.document.positionAt(
@@ -165,21 +165,21 @@ function decorate(editor: TextEditor) {
     ].join(" | ");
 
     if (matchedAddress === checksumAddress) {
-      hoverMessage.appendText("Address checksum is valid.\n");
+      hoverMessage.appendText("Checksum of address is valid.\n");
       hoverMessage.appendMarkdown(explorerMarkdown);
       validChecksumAddresses.push({
         range,
         hoverMessage,
       });
     } else if (matchedAddress === matchedAddress.toLowerCase()) {
-      hoverMessage.appendText("Address is not using checksum.\n");
+      hoverMessage.appendText("Address is not using a checksum.\n");
       hoverMessage.appendMarkdown(explorerMarkdown);
       lowercaseAddresses.push({
         range,
         hoverMessage,
       });
     } else {
-      hoverMessage.appendText("Address has an invalid checksum!\n");
+      hoverMessage.appendText("Checksum of address is invalid!\n");
       hoverMessage.appendMarkdown(explorerMarkdown);
       invalidChecksumAddresses.push({
         range,
