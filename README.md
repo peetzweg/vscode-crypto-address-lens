@@ -2,7 +2,9 @@
 
 [➡ Install Extension on Marketplace](https://marketplace.visualstudio.com/items?itemName=peetzweg.crypto-address-lens)
 
-[➡ Fund Extension on Gitcoin](https://gitcoin.co/grants/9316/address-lens-ide-extension)
+[☕ Fund Extension on Gitcoin](https://gitcoin.co/grants/9316/address-lens-ide-extension)
+
+[✒️ Write a Review on the Marketplace](https://marketplace.visualstudio.com/items?itemName=peetzweg.crypto-address-lens&ssr=false#review-details)
 
 ## Features
 
@@ -52,11 +54,6 @@ It currently differentiates between these four states:
  3. All lower cased Address
 
  4. Not a valid address at all!
-<!--
-## Extension Settings
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something. -->
 
 ## Known Issues
 
@@ -72,8 +69,7 @@ See [CHANGELOG](./CHANGELOG.md)
 
 Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
++ [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
 
 ## Thanks
 
@@ -81,10 +77,10 @@ I used these tutorials to get me started.
 
 ### Decorations
 
-https://vscode.rocks/decorations/
+<https://vscode.rocks/decorations/>
 
-https://github.com/microsoft/vscode-extension-samples/blob/main/decorator-sample/USAGE.md
+<https://github.com/microsoft/vscode-extension-samples/blob/main/decorator-sample/USAGE.md>
 
 ### Diagnostics
 
-https://github.com/microsoft/vscode-extension-samples/blob/main/code-actions-sample/src/extension.ts
+<https://github.com/microsoft/vscode-extension-samples/blob/main/code-actions-sample/src/extension.ts>
