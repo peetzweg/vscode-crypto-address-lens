@@ -2,6 +2,8 @@
 
 [➡ Install Extension on Marketplace](https://marketplace.visualstudio.com/items?itemName=peetzweg.crypto-address-lens)
 
+[➡ Fund Extension on Gitcoin](https://gitcoin.co/grants/9316/address-lens-ide-extension)
+
 ## Features
 
 + highlights ethereum style addresses
