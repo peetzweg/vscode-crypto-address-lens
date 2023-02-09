@@ -1,4 +1,4 @@
-import ethereum from '@crypto-address-lens/evm';
+import evm from '@crypto-address-lens/evm';
 import {
   DecorationOptions,
   ExtensionContext,
@@ -14,7 +14,6 @@ import { AddressFixer } from './app/AddressFixer';
 import { ChainInfos } from './app/config/chains';
 import * as decorations from './app/config/decorations';
 import { RPCClient } from './app/RPCClient';
-import { toChecksumAddress } from './app/utils/toChecksumAddress';
 
 let detailsDecoration: TextEditorDecorationType | null = null;
 
@@ -99,7 +98,7 @@ export function activate(context: ExtensionContext) {
       selection.start.line
     ).text;
 
-    let match = ethereum.match.line.exec(lineText);
+    const match = evm.match.line.exec(lineText);
     if (match !== null && match.length > 0) {
       Promise.all(
         rpcClients.map((c) =>
@@ -141,12 +140,12 @@ export function activate(context: ExtensionContext) {
 function decorate(editor: TextEditor) {
   const sourceCode = editor.document.getText();
 
-  let validChecksumAddresses: DecorationOptions[] = [];
-  let invalidChecksumAddresses: DecorationOptions[] = [];
-  let lowercaseAddresses: DecorationOptions[] = [];
+  const validChecksumAddresses: DecorationOptions[] = [];
+  const invalidChecksumAddresses: DecorationOptions[] = [];
+  const lowercaseAddresses: DecorationOptions[] = [];
 
   let match;
-  const regex = ethereum.match.global();
+  const regex = evm.match.global();
   while ((match = regex.exec(sourceCode))) {
     const matchedAddress = match[1];
     const startPos = editor.document.positionAt(match.index);
@@ -154,7 +153,7 @@ function decorate(editor: TextEditor) {
       match.index + matchedAddress.length
     );
     const range = new Range(startPos, endPos);
-    const checksumAddress = toChecksumAddress(matchedAddress);
+    const checksumAddress = evm.utils.toChecksumAddress(matchedAddress);
     const hoverMessage = new MarkdownString();
     const explorerMarkdown = [
       `[Etherscan](https://etherscan.io/address/${checksumAddress})`,

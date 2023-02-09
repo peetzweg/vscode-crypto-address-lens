@@ -25,7 +25,7 @@ export const invalidChecksum = window.createTextEditorDecorationType({
 
 export const lowercase = window.createTextEditorDecorationType({
   ...commonStyle,
-  borderColor: 'green',
+  borderColor: '#ffdb00ff',
   after: {
     contentText: '🟡',
     margin: '0 0 0 2px',

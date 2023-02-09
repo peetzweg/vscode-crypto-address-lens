@@ -1,6 +1,5 @@
-import * as vscode from "vscode";
-import ethereum from "./addresses/ethereum";
-import toChecksumAddress from "./utils/toChecksumAddress";
+import * as vscode from 'vscode';
+import evm from '@crypto-address-lens/evm';
 
 export class AddressFixer implements vscode.CodeActionProvider {
   public static readonly providedCodeActionKinds = [
@@ -21,13 +20,13 @@ export class AddressFixer implements vscode.CodeActionProvider {
 
     const fixes: vscode.CodeAction[] = [];
 
-    const checksumAddress = toChecksumAddress(rawAddress);
+    const checksumAddress = evm.utils.toChecksumAddress(rawAddress);
     if (checksumAddress !== rawAddress) {
       const toCheckSumAddressFix = this.createFix(
         document,
         rangeOfAddress,
         checksumAddress,
-        "Convert to address with checksum"
+        'Convert to address with checksum'
       );
       toCheckSumAddressFix.isPreferred = true;
       fixes.push(toCheckSumAddressFix);
@@ -38,7 +37,7 @@ export class AddressFixer implements vscode.CodeActionProvider {
         document,
         rangeOfAddress,
         rawAddress.toLowerCase(),
-        "Convert to lowercase address"
+        'Convert to lowercase address'
       );
       if (fixes.length === 0) {
         toLowerCaseFix.isPreferred = true;
@@ -57,7 +56,7 @@ export class AddressFixer implements vscode.CodeActionProvider {
     const lineText = document.lineAt(cursorPosition.line).text;
 
     let match;
-    const regex = ethereum.global();
+    const regex = evm.match.global();
     while ((match = regex.exec(lineText))) {
       const matchedAddress = match[1];
       const [startCharacter, endCharacter] = [

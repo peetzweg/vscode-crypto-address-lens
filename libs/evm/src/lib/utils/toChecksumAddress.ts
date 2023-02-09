@@ -1,10 +1,10 @@
-const keccak = require("keccak");
+import keccak from 'keccak';
 
 export function toChecksumAddress(address: string) {
   const stripAddress = stripHexPrefix(address).toLowerCase();
 
-  const keccakHash = keccak("keccak256").update(stripAddress).digest("hex");
-  let checksumAddress = "0x";
+  const keccakHash = keccak('keccak256').update(stripAddress).digest('hex');
+  let checksumAddress = '0x';
 
   for (let i = 0; i < stripAddress.length; i++) {
     checksumAddress +=
@@ -17,7 +17,7 @@ export function toChecksumAddress(address: string) {
 }
 
 function stripHexPrefix(address: string) {
-  return address.slice(0, 2) === "0x" ? address.slice(2) : address;
+  return address.slice(0, 2) === '0x' ? address.slice(2) : address;
 }
 
 export default toChecksumAddress;
