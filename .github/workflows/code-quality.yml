@@ -25,5 +25,20 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: test
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'npm'
+
+      - name: Install `packages`
+        run: npm install
+
+      - name: Lint
         run: npm run test
+
+
