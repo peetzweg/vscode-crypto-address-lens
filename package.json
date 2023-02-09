@@ -1,122 +1,52 @@
 {
   "name": "crypto-address-lens",
-  "displayName": "Crypto Address Lens",
-  "description": "VSCode extension to inspect and validate crypto address inside the source code.",
-  "version": "0.5.1",
-  "license": "Apache-2.0",
-  "badges": [
-    {
-      "url": "https://raw.githubusercontent.com/peetzweg/vscode-crypto-address-lens/main/logo.png",
-      "href": "https://marketplace.visualstudio.com/items?itemName=peetzweg.crypto-address-lens",
-      "description": "VSCode extension to inspect and validate crypto address inside the source code."
-    }
-  ],
-  "icon": "logo.png",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/peetzweg/vscode-crypto-address-lens"
-  },
-  "publisher": "peetzweg",
-  "engines": {
-    "vscode": "^1.69.0"
-  },
-  "keywords": [
-    "crypto",
-    "address",
-    "validate",
-    "ethereum",
-    "wallet"
-  ],
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onStartupFinished"
-  ],
-  "main": "./out/extension.js",
-  "scripts": {
-    "login": "vsce login peetzweg",
-    "publish": "vsce publish",
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
-  },
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
   "devDependencies": {
-    "@types/glob": "^7.2.0",
-    "@types/mocha": "^9.1.1",
-    "@types/node": "16.x",
-    "@types/vscode": "^1.69.0",
-    "@typescript-eslint/eslint-plugin": "^5.31.0",
-    "@typescript-eslint/parser": "^5.31.0",
-    "@vscode/test-electron": "^2.1.5",
-    "eslint": "^8.20.0",
-    "glob": "^8.0.3",
-    "mocha": "^10.0.0",
-    "typescript": "^4.7.4",
-    "vsce": "^2.10.0"
+    "@nrwl/esbuild": "15.6.3",
+    "@nrwl/eslint-plugin-nx": "15.6.3",
+    "@nrwl/jest": "15.6.3",
+    "@nrwl/js": "15.6.3",
+    "@nrwl/linter": "15.6.3",
+    "@nrwl/node": "^15.6.3",
+    "@nrwl/vite": "^15.6.3",
+    "@nrwl/workspace": "15.6.3",
+    "@types/glob": "^8.0.1",
+    "@types/jest": "28.1.1",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.7.1",
+    "@types/vscode": "^1.75.0",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "@vitest/coverage-c8": "~0.25.8",
+    "@vitest/ui": "^0.25.8",
+    "@vscode/test-electron": "^2.2.3",
+    "esbuild": "^0.15.7",
+    "eslint": "~8.15.0",
+    "eslint-config-prettier": "8.1.0",
+    "glob": "^8.1.0",
+    "jest": "28.1.1",
+    "jest-environment-jsdom": "28.1.1",
+    "jsdom": "~20.0.3",
+    "mocha": "^10.2.0",
+    "nx": "15.6.3",
+    "prettier": "^2.6.2",
+    "ts-jest": "28.0.5",
+    "ts-node": "10.9.1",
+    "typescript": "~4.8.2",
+    "vite": "^4.0.1",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-tsconfig-paths": "^4.0.2",
+    "vitest": "^0.25.8",
+    "vsce": "^2.15.0",
+    "vscode": "^1.1.37"
   },
   "dependencies": {
-    "@ethersproject/abi": "^5.6.4",
-    "keccak": "^3.0.2"
-  },
-  "contributes": {
-    "configuration": {
-      "title": "Crypto Address Lens",
-      "properties": {
-        "cryptoAddressLens.ethereum.rpc": {
-          "type": "string",
-          "default": "https://rpc.ankr.com/eth",
-          "description": "URL of the RPC node to use for Ethereum"
-        },
-        "cryptoAddressLens.ethereum.enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enables Ethereum for Address Lookups"
-        },
-        "cryptoAddressLens.polygon.rpc": {
-          "type": "string",
-          "default": "https://rpc-mainnet.matic.quiknode.pro",
-          "description": "URL of the RPC node to use for Polygon"
-        },
-        "cryptoAddressLens.polygon.enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enables Polygon for Address Lookups"
-        },
-        "cryptoAddressLens.bsc.rpc": {
-          "type": "string",
-          "default": "https://binance.nodereal.io",
-          "description": "URL of the RPC node to use for Binance Smart Chain"
-        },
-        "cryptoAddressLens.bsc.enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enables Binance Smart Chain for Address Lookups"
-        },
-        "cryptoAddressLens.local.rpc": {
-          "type": "string",
-          "default": "http://localhost:8545",
-          "description": "URL of the RPC node to use for Local Chain"
-        },
-        "cryptoAddressLens.local.enabled": {
-          "type": "boolean",
-          "default": false,
-          "description": "Enables Local Chain for Address Lookups"
-        },
-        "cryptoAddressLens.custom.rpc": {
-          "type": "string",
-          "default": "http://localhost:8545",
-          "description": "URL of the RPC node to use for Custom Chain"
-        },
-        "cryptoAddressLens.custom.enabled": {
-          "type": "boolean",
-          "default": false,
-          "description": "Enables Custom Chain for Address Lookups"
-        }
-      }
-    }
+    "@ethersproject/abi": "^5.7.0",
+    "axios": "^1.0.0",
+    "keccak": "^3.0.3",
+    "tslib": "^2.3.0"
   }
 }

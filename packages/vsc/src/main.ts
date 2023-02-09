@@ -1,3 +1,4 @@
+import ethereum from '@crypto-address-lens/evm';
 import {
   DecorationOptions,
   ExtensionContext,
@@ -8,13 +9,12 @@ import {
   TextEditorDecorationType,
   window,
   workspace,
-} from "vscode";
-import ethereum from "./addresses/ethereum";
-import { AddressFixer } from "./AddressFixer";
-import { ChainInfos } from "./config/chains";
-import * as decorations from "./config/decorations";
-import { RPCClient } from "./RPCClient";
-import { toChecksumAddress } from "./utils/toChecksumAddress";
+} from 'vscode';
+import { AddressFixer } from './app/AddressFixer';
+import { ChainInfos } from './app/config/chains';
+import * as decorations from './app/config/decorations';
+import { RPCClient } from './app/RPCClient';
+import { toChecksumAddress } from './app/utils/toChecksumAddress';
 
 let detailsDecoration: TextEditorDecorationType | null = null;
 
@@ -23,13 +23,13 @@ let rpcClients: RPCClient[] = [];
 function initRPCClients(): RPCClient[] {
   const clients = Object.entries(ChainInfos).map(([, chainDetails]) => {
     const enabled = workspace
-      .getConfiguration("cryptoAddressLens." + chainDetails.configSection)
-      .get("enabled");
+      .getConfiguration('cryptoAddressLens.' + chainDetails.configSection)
+      .get('enabled');
     const rpc = workspace
-      .getConfiguration("cryptoAddressLens." + chainDetails.configSection)
-      .get("rpc");
+      .getConfiguration('cryptoAddressLens.' + chainDetails.configSection)
+      .get('rpc');
 
-    if (rpc && typeof rpc === "string") {
+    if (rpc && typeof rpc === 'string') {
       if (enabled) {
         return new RPCClient(chainDetails.name, rpc);
       }
@@ -47,7 +47,7 @@ function initRPCClients(): RPCClient[] {
 export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     languages.registerCodeActionsProvider(
-      { scheme: "file" },
+      { scheme: 'file' },
       new AddressFixer(),
       {
         providedCodeActionKinds: AddressFixer.providedCodeActionKinds,
@@ -99,7 +99,7 @@ export function activate(context: ExtensionContext) {
       selection.start.line
     ).text;
 
-    let match = ethereum.line.exec(lineText);
+    let match = ethereum.match.line.exec(lineText);
     if (match !== null && match.length > 0) {
       Promise.all(
         rpcClients.map((c) =>
@@ -123,7 +123,7 @@ export function activate(context: ExtensionContext) {
           detailsDecoration = window.createTextEditorDecorationType({
             isWholeLine: true,
             after: {
-              color: "#5d5d55",
+              color: '#5d5d55',
               contentText: `\t| ${symbol}`,
             },
           });
@@ -146,7 +146,7 @@ function decorate(editor: TextEditor) {
   let lowercaseAddresses: DecorationOptions[] = [];
 
   let match;
-  const regex = ethereum.global();
+  const regex = ethereum.match.global();
   while ((match = regex.exec(sourceCode))) {
     const matchedAddress = match[1];
     const startPos = editor.document.positionAt(match.index);
@@ -160,24 +160,24 @@ function decorate(editor: TextEditor) {
       `[Etherscan](https://etherscan.io/address/${checksumAddress})`,
       `[Polygonscan](https://polygonscan.com/address/${checksumAddress})`,
       `[Bscscan](https://bscscan.com/address/${checksumAddress})`,
-    ].join(" | ");
+    ].join(' | ');
 
     if (matchedAddress === checksumAddress) {
-      hoverMessage.appendText("Checksum of address is valid.\n");
+      hoverMessage.appendText('Checksum of address is valid.\n');
       hoverMessage.appendMarkdown(explorerMarkdown);
       validChecksumAddresses.push({
         range,
         hoverMessage,
       });
     } else if (matchedAddress === matchedAddress.toLowerCase()) {
-      hoverMessage.appendText("Address is not using a checksum.\n");
+      hoverMessage.appendText('Address is not using a checksum.\n');
       hoverMessage.appendMarkdown(explorerMarkdown);
       lowercaseAddresses.push({
         range,
         hoverMessage,
       });
     } else {
-      hoverMessage.appendText("Checksum of address is invalid!\n");
+      hoverMessage.appendText('Checksum of address is invalid!\n');
       hoverMessage.appendMarkdown(explorerMarkdown);
       invalidChecksumAddresses.push({
         range,
