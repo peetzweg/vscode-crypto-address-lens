@@ -2,7 +2,10 @@
   "name": "crypto-address-lens",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "lint": "nx run-many --target=lint",
+    "test": "nx run-many --target=test"
+  },
   "private": true,
   "devDependencies": {
     "@nrwl/esbuild": "15.6.3",
@@ -15,6 +18,7 @@
     "@nrwl/workspace": "15.6.3",
     "@types/glob": "^8.0.1",
     "@types/jest": "28.1.1",
+    "@types/keccak": "^3.0.1",
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.7.1",
     "@types/vscode": "^1.75.0",
