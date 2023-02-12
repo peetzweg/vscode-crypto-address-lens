@@ -38,15 +38,29 @@
       "executor": "@nrwl/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/vsc",
+        "outputPath": "packages/vsc/publish",
         "external": ["vscode"],
         "format": ["cjs"],
+        "outputFileName": "main",
         "platform": "node",
         "bundle": true,
         "minify": true,
         "main": "packages/vsc/src/main.ts",
         "tsConfig": "packages/vsc/tsconfig.app.json",
         "assets": ["packages/vsc/src/assets"]
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["prepublish"],
+      "options": {
+          "commands": [
+            "mv publish/main.cjs publish/main.js",
+            "rm publish/package.json",
+            "vsce publish --no-dependencies"
+          ],
+          "parallel": false,
+          "cwd": "packages/vsc"
       }
     },
     "lint": {

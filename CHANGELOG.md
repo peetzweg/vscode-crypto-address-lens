@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.0.0] - 2023-02-12
+
+### Changed
+
++ overhaul repository structure to make the extension better extendable and maintainable for the future.
+
 ## [0.5.1] - 2022-09-01
 
 ### Changed

@@ -37,8 +37,8 @@
   ],
   "main": "./publish/main",
   "dependencies": {
-    "@ethersproject/abi": "^5.7.0",
-    "keccak": "^3.0.3"
+    "@ethersproject/abi": "5.7.0",
+    "keccak": "3.0.3"
   },
   "contributes": {
     "configuration": {

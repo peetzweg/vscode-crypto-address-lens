@@ -19,14 +19,8 @@ jobs:
       - name: Install `packages`
         run: npm install
 
-      - name: Compile
-        run: npm run compile
-
-      # - name: Login
-      #   run: npm run login
-
       - name: Publish
-        run: npm run publish
+        run: npm run vsc:publish
         env:
           VSCE_PAT: ${{ secrets.PEETZWEG_AZURE_KEY }}
 
