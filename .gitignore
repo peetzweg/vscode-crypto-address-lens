@@ -2,6 +2,7 @@
 
 # compiled output
 dist
+publish
 tmp
 /out-tsc
 
