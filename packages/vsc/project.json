@@ -55,8 +55,8 @@
       "dependsOn": ["prepublish"],
       "options": {
           "commands": [
-            "mv publish/main.cjs publish/main.js",
-            "rm publish/package.json",
+            "mv ./publish/main.cjs ./publish/main.js",
+            "rm ./publish/package.json",
             "vsce publish --no-dependencies"
           ],
           "parallel": false,
