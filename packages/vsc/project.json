@@ -5,7 +5,7 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/esbuild:esbuild",
+      "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/vsc",
@@ -16,11 +16,13 @@
         "sourcemap": true,
         "main": "packages/vsc/src/main.ts",
         "tsConfig": "packages/vsc/tsconfig.app.json",
-        "assets": ["packages/vsc/src/assets"]
+        "assets": ["packages/vsc/src/assets"],
+        "generatePackageJson": true,
+        "thirdParty": true
       }
     },
     "watch": {
-      "executor": "@nrwl/esbuild:esbuild",
+      "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/vsc",
@@ -31,11 +33,13 @@
         "watch": true,
         "main": "packages/vsc/src/main.ts",
         "tsConfig": "packages/vsc/tsconfig.app.json",
-        "assets": ["packages/vsc/src/assets"]
+        "assets": ["packages/vsc/src/assets"],
+        "generatePackageJson": true,
+        "thirdParty": true
       }
     },
     "prepublish": {
-      "executor": "@nrwl/esbuild:esbuild",
+      "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "packages/vsc/publish",
@@ -47,31 +51,33 @@
         "minify": true,
         "main": "packages/vsc/src/main.ts",
         "tsConfig": "packages/vsc/tsconfig.app.json",
-        "assets": ["packages/vsc/src/assets"]
+        "assets": ["packages/vsc/src/assets"],
+        "generatePackageJson": true,
+        "thirdParty": true
       }
     },
     "publish": {
       "executor": "nx:run-commands",
       "dependsOn": ["prepublish"],
       "options": {
-          "commands": [
-            "mv ./publish/main.cjs ./publish/main.js",
-            "rm ./publish/package.json",
-            "vsce publish --no-dependencies"
-          ],
-          "parallel": false,
-          "cwd": "packages/vsc"
+        "commands": [
+          "mv ./publish/main.cjs ./publish/main.js",
+          "rm ./publish/package.json",
+          "vsce publish --no-dependencies"
+        ],
+        "parallel": false,
+        "cwd": "packages/vsc"
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/vsc/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/vsc/jest.config.ts",
