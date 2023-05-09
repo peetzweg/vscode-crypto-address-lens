@@ -1,0 +1,13 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch Crypto Address Lens",
+			"args": [
+				"--extensionDevelopmentPath=${workspaceFolder}/dist/packages/vsc/"x
+			],
+			"request": "launch",
+			"type": "extensionHost"
+		}
+	]
+}
