@@ -11,7 +11,6 @@ import {
   workspace,
 } from 'vscode';
 import { AddressFixer } from './app/AddressFixer';
-import { ChainInfos } from './app/config/chains';
 import * as decorations from './app/config/decorations';
 import { RPCClient } from './app/RPCClient';
 
@@ -19,31 +18,37 @@ let detailsDecoration: TextEditorDecorationType | null = null;
 
 let rpcClients: RPCClient[] = [];
 
-function initRPCClients(): RPCClient[] {
-  const clients = Object.entries(ChainInfos).map(([, chainDetails]) => {
-    const enabled = workspace
-      .getConfiguration('cryptoAddressLens.' + chainDetails.configSection)
-      .get('enabled');
-    const rpc = workspace
-      .getConfiguration('cryptoAddressLens.' + chainDetails.configSection)
-      .get('rpc');
+let createExplorerMarkdown: (address: string) => string = () => '';
 
-    if (rpc && typeof rpc === 'string') {
-      if (enabled) {
-        return new RPCClient(chainDetails.name, rpc);
-      }
-    } else {
-      console.warn(
-        `RPC Url for chain ${chainDetails.name} not correctly setup: ${rpc}`
-      );
-      return;
+function initRPCClients() {
+  const rpcs = workspace.getConfiguration('cryptoAddressLens').get('rpcs');
+
+  const clients = Object.entries(rpcs).map(([chain, uri]) => {
+    if (typeof uri === 'string' && uri) {
+      return new RPCClient(chain, uri);
     }
   });
 
-  return clients.filter((client) => !!client) as RPCClient[];
+  rpcClients = clients.filter((client) => !!client) as RPCClient[];
+}
+
+function initExplorers() {
+  const explorers = workspace
+    .getConfiguration('cryptoAddressLens')
+    .get('explorers');
+  createExplorerMarkdown = (address: string) => {
+    const links = Object.entries(explorers).map(([chain, uri]) => {
+      if (typeof uri === 'string' && uri) {
+        return `[${chain}](${uri}${address})`;
+      }
+    });
+
+    return links.filter((explorer) => !!explorer).join(' | ');
+  };
 }
 
 export function activate(context: ExtensionContext) {
+  initExplorers();
   context.subscriptions.push(
     languages.registerCodeActionsProvider(
       { scheme: 'file' },
@@ -77,11 +82,13 @@ export function activate(context: ExtensionContext) {
 
   // Init rpcClients again if configuration has changed
   workspace.onDidChangeConfiguration(() => {
-    rpcClients = initRPCClients();
+    initRPCClients();
+    initExplorers();
   });
 
   // Init clients right before first use
-  rpcClients = initRPCClients();
+  initRPCClients();
+
   window.onDidChangeTextEditorSelection((event) => {
     // Always dispose previous decoration if available
     if (detailsDecoration) {
@@ -155,12 +162,7 @@ function decorate(editor: TextEditor) {
     const range = new Range(startPos, endPos);
     const checksumAddress = evm.utils.toChecksumAddress(matchedAddress);
     const hoverMessage = new MarkdownString();
-    const explorerMarkdown = [
-      `[Etherscan](https://etherscan.io/address/${checksumAddress})`,
-      `[Polygonscan](https://polygonscan.com/address/${checksumAddress})`,
-      `[Bscscan](https://bscscan.com/address/${checksumAddress})`,
-    ].join(' | ');
-
+    const explorerMarkdown = createExplorerMarkdown(checksumAddress);
     if (matchedAddress === checksumAddress) {
       hoverMessage.appendText('Checksum of address is valid.\n');
       hoverMessage.appendMarkdown(explorerMarkdown);
