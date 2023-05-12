@@ -42,7 +42,7 @@
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "packages/vsc/publish",
+        "outputPath": "dist/packages/vsc",
         "external": ["vscode"],
         "format": ["cjs"],
         "outputFileName": "main",
@@ -51,7 +51,12 @@
         "minify": true,
         "main": "packages/vsc/src/main.ts",
         "tsConfig": "packages/vsc/tsconfig.app.json",
-        "assets": ["packages/vsc/src/assets"],
+        "assets": [
+          { "input": "packages/vsc/", "glob": "logo.png", "output": "/" },
+          { "input": "packages/vsc/", "glob": "README.md", "output": "/" },
+          { "input": "packages/vsc/", "glob": "LICENSE", "output": "/" },
+          { "input": "packages/vsc/", "glob": "CHANGELOG.md", "output": "/" }
+        ],
         "generatePackageJson": true,
         "thirdParty": true
       }
@@ -61,12 +66,11 @@
       "dependsOn": ["prepublish"],
       "options": {
         "commands": [
-          "mv ./publish/main.cjs ./publish/main.js",
-          "rm ./publish/package.json",
+          "mv ./main.cjs ./main.js",
           "vsce publish --no-dependencies"
         ],
         "parallel": false,
-        "cwd": "packages/vsc"
+        "cwd": "dist/packages/vsc"
       }
     },
     "lint": {

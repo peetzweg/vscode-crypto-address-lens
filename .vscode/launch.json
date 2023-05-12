@@ -4,7 +4,7 @@
 		{
 			"name": "Launch Crypto Address Lens",
 			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}/dist/packages/vsc/"x
+				"--extensionDevelopmentPath=${workspaceFolder}/dist/packages/vsc/"
 			],
 			"request": "launch",
 			"type": "extensionHost"
