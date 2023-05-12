@@ -55,7 +55,8 @@
           { "input": "packages/vsc/", "glob": "logo.png", "output": "/" },
           { "input": "packages/vsc/", "glob": "README.md", "output": "/" },
           { "input": "packages/vsc/", "glob": "LICENSE", "output": "/" },
-          { "input": "packages/vsc/", "glob": "CHANGELOG.md", "output": "/" }
+          { "input": "packages/vsc/", "glob": "CHANGELOG.md", "output": "/" },
+          { "input": "packages/vsc/", "glob": "demo.gif", "output": "/" }
         ],
         "generatePackageJson": true,
         "thirdParty": true
