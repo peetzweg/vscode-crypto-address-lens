@@ -21,21 +21,22 @@
 Valid configurations settings with defaults:
 
 ```json
+//settings.json
 {
-    "cryptoAddressLens.ethereum.rpc": "https://rpc.ankr.com/eth",
-    "cryptoAddressLens.ethereum.enabled": true,
-
-    "cryptoAddressLens.polygon.rpc": "https://rpc-mainnet.matic.quiknode.pro",
-    "cryptoAddressLens.polygon.enabled": true,
-
-    "cryptoAddressLens.bsc.rpc": "https://binance.nodereal.io",
-    "cryptoAddressLens.bsc.enabled": true,
-
-    "cryptoAddressLens.local.rpc": "http://localhost:8545",
-    "cryptoAddressLens.local.enabled": false,
-
-    "cryptoAddressLens.custom.rpc": "http://localhost:8545",
-    "cryptoAddressLens.custom.enabled": false
+  "cryptoAddressLens.rpcs": {
+    "Ethereum": "https://rpc.ankr.com/eth",
+    "Arbitrum": "https://1rpc.io/arb",
+    "Optimism": "https://mainnet.optimism.io",
+    "Polygon": "https://rpc-mainnet.matic.quiknode.pro",
+    "BSC": "https://binance.nodereal.io"
+  },
+  "cryptoAddressLens.explorers": {
+    "Etherscan": "https://etherscan.io/address/",
+    "Arbiscan": "https://arbiscan.io/address/",
+    "Optimism": "https://optimistic.etherscan.io/address/",
+    "Polygonscan": "https://polygonscan.com/address/",
+    "Bscscan": "https://bscscan.com/address/"
+  }
 }
 ```
 
