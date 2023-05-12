@@ -44,55 +44,87 @@
     "configuration": {
       "title": "Crypto Address Lens",
       "properties": {
+        "cryptoAddressLens.rpcs": {
+          "type": "object",
+          "description": "Object defining key: network name, value: rpc url. Set value to `false` to deactivate chain lookups.",
+          "default":{
+            "Ethereum": "https://rpc.ankr.com/eth",
+            "Arbitrum": "https://1rpc.io/arb",
+            "Optimism": "https://mainnet.optimism.io",
+            "Polygon": "https://rpc-mainnet.matic.quiknode.pro",
+            "BSC": "https://binance.nodereal.io"
+          }
+        },
+        "cryptoAddressLens.explorers":{
+          "type": "object",
+          "description": "Object defining key: network name, value: explorer url. Set value to `false` to deactivate explorer.",
+          "default":{
+            "Etherscan": "https://etherscan.io/address/",
+            "Arbiscan": "https://arbiscan.io/address/",
+            "Optimism": "https://optimistic.etherscan.io/address/",
+            "Polygonscan": "https://polygonscan.com/address/",
+            "Bscscan": "https://bscscan.com/address/"
+          }
+        },
         "cryptoAddressLens.ethereum.rpc": {
           "type": "string",
           "default": "https://rpc.ankr.com/eth",
-          "description": "URL of the RPC node to use for Ethereum"
+          "description": "URL of the RPC node to use for Ethereum",
+          "deprecationMessage": "Deprecated: Please 'cryptoAddressLens.rpc' instead."
         },
         "cryptoAddressLens.ethereum.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "Enables Ethereum for Address Lookups"
+          "description": "Enables Ethereum for Address Lookups",
+          "deprecationMessage": "Deprecated: Please 'cryptoAddressLens.rpc' instead."
         },
         "cryptoAddressLens.polygon.rpc": {
           "type": "string",
           "default": "https://rpc-mainnet.matic.quiknode.pro",
-          "description": "URL of the RPC node to use for Polygon"
+          "description": "URL of the RPC node to use for Polygon",
+          "deprecationMessage": "Deprecated: Please 'cryptoAddressLens.rpc' instead."
         },
         "cryptoAddressLens.polygon.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "Enables Polygon for Address Lookups"
+          "description": "Enables Polygon for Address Lookups",
+          "deprecationMessage": "Deprecated: Please 'cryptoAddressLens.rpc' instead."
         },
         "cryptoAddressLens.bsc.rpc": {
           "type": "string",
           "default": "https://binance.nodereal.io",
-          "description": "URL of the RPC node to use for Binance Smart Chain"
+          "description": "URL of the RPC node to use for Binance Smart Chain",
+          "deprecationMessage": "Deprecated: Please 'cryptoAddressLens.rpc' instead."
         },
         "cryptoAddressLens.bsc.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "Enables Binance Smart Chain for Address Lookups"
+          "description": "Enables Binance Smart Chain for Address Lookups",
+          "deprecationMessage": "Deprecated: Please 'cryptoAddressLens.rpc' instead."
         },
         "cryptoAddressLens.local.rpc": {
           "type": "string",
           "default": "http://localhost:8545",
-          "description": "URL of the RPC node to use for Local Chain"
+          "description": "URL of the RPC node to use for Local Chain",
+          "deprecationMessage": "Deprecated: Please 'cryptoAddressLens.rpc' instead."
         },
         "cryptoAddressLens.local.enabled": {
           "type": "boolean",
           "default": false,
-          "description": "Enables Local Chain for Address Lookups"
+          "description": "Enables Local Chain for Address Lookups",
+          "deprecationMessage": "Deprecated: Please 'cryptoAddressLens.rpc' instead."
         },
         "cryptoAddressLens.custom.rpc": {
           "type": "string",
           "default": "http://localhost:8545",
-          "description": "URL of the RPC node to use for Custom Chain"
+          "description": "URL of the RPC node to use for Custom Chain",
+          "deprecationMessage": "Deprecated: Please 'cryptoAddressLens.rpc' instead."
         },
         "cryptoAddressLens.custom.enabled": {
           "type": "boolean",
           "default": false,
-          "description": "Enables Custom Chain for Address Lookups"
+          "description": "Enables Custom Chain for Address Lookups",
+          "deprecationMessage": "Deprecated: Please 'cryptoAddressLens.rpc' instead."
         }
       }
     }

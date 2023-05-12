@@ -1,4 +1,22 @@
 # Change Log
+## [1.1.0] - 2023-05-12
+
+
+### Added
+
++ adds new configuration property `crypoAddressLens.explorers` to configure block explorers to show up on address hover. It expects an object, key of this object is the explorers name, value is the URL of the block explorer which is suffixed with the address to lookup.
+
+### Changed
+
++ deprecates configuration properties of the scheme `cryptoAddressLens.[network].rpc` and `cryptoAddressLens.[network].enabled`.
+
++ migrates ability to setup networks and rpcs into new configuration property called `cryptoAddressLens.rpcs`. It expects an objects which keys are the network name and the value is the RPC url. Pass `false` as value to deactivate the network.
+
+## [1.0.1] - 2023-02-12
+
+### Fixed
+
++ restores access to README and CHANGELOG from VSCode/marketplace
 
 ## [1.0.0] - 2023-02-12
 
