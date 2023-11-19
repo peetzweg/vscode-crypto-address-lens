@@ -15,7 +15,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/evm/**/*.ts"]
@@ -23,7 +23,7 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/evm"],
+      "outputs": ["{workspaceRoot}/coverage/libs/evm"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/evm"
