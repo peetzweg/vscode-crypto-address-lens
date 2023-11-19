@@ -47,7 +47,7 @@
         "cryptoAddressLens.rpcs": {
           "type": "object",
           "description": "Object defining key: network name, value: rpc url. Set value to `false` to deactivate chain lookups.",
-          "default":{
+          "default": {
             "Ethereum": "https://rpc.ankr.com/eth",
             "Arbitrum": "https://1rpc.io/arb",
             "Optimism": "https://mainnet.optimism.io",
@@ -55,10 +55,10 @@
             "BSC": "https://binance.nodereal.io"
           }
         },
-        "cryptoAddressLens.explorers":{
+        "cryptoAddressLens.explorers": {
           "type": "object",
           "description": "Object defining key: network name, value: explorer url. Set value to `false` to deactivate explorer.",
-          "default":{
+          "default": {
             "Etherscan": "https://etherscan.io/address/",
             "Arbiscan": "https://arbiscan.io/address/",
             "Optimism": "https://optimistic.etherscan.io/address/",
